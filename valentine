@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-image: url('roses-wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+            color: red;
+            overflow: hidden;
+        }
+        .container {
+            margin: 20px;
+        }
+        .photo {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            margin: 10px auto;
+        }
+        .text {
+            font-size: 1.5rem;
+            margin: 20px;
+        }
+        .question {
+            font-size: 2rem;
+            margin: 20px;
+            font-weight: bold;
+        }
+        .buttons {
+            margin-top: 30px;
+        }
+        .button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin: 10px;
+            color: #fff;
+            background-color: #d90052;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .button.no {
+            background-color: #333;
+            position: relative;
+        }
+        .emojis {
+            font-size: 2rem;
+            position: fixed;
+            animation: float 3s infinite;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text">Hey Simran, How’s it going? I know I’m always late when it comes to things, but I have something important to ask.</div>
+
+        <img src="photo1.jpg" alt="Simran" class="photo">
+        <img src="photo2.jpg" alt="Bouquet" class="photo">
+        <img src="photo3.jpg" alt="Romantic Moment" class="photo">
+
+        <div class="question">Will you be my Valentine?</div>
+
+        <div class="buttons">
+            <button class="button yes" onclick="showEndMessage()">Yes</button>
+            <button class="button no" onclick="moveNoButton(this)">No</button>
+        </div>
+
+        <div id="emoji-container"></div>
+    </div>
+
+    <audio id="background-music" loop>
+        <source src="you-belong-with-me-clip.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Handles the "Yes" button
+        function showEndMessage() {
+            document.body.innerHTML = `
+                <div class='text'>Simran, you mean the world to me. I can't wait to celebrate Valentine's Day together!</div>
+                <audio autoplay loop>
+                    <source src="you-belong-with-me-clip.mp3" type="audio/mpeg">
+                </audio>
+            `;
+        }
+
+        // Handles the "No" button jumping around
+        function moveNoButton(button) {
+            const x = Math.random() * window.innerWidth - button.offsetWidth;
+            const y = Math.random() * window.innerHeight - button.offsetHeight;
+            button.style.position = "absolute";
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+            showEmoji();
+        }
+
+        // Show floating emojis
+        function showEmoji() {
+            const emojis = ["❤️", "💕", "💖", "💗", "💘"];
+            const emoji = document.createElement("div");
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.className = "emojis";
+            emoji.style.left = Math.random() * 100 + "vw";
+            emoji.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(emoji);
+            setTimeout(() => emoji.remove(), 5000);
+        }
+
+        // Start playing music on page load
+        window.onload = function () {
+            const music = document.getElementById("background-music");
+            music.play();
+        };
+    </script>
+</body>
+</html>
