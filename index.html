@@ -6,128 +6,117 @@
     <title>Will You Be My Valentine?</title>
     <style>
         body {
-            margin: 0;
             font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #ffe6e6;
             text-align: center;
-            background-image: url('roses-wallpaper.jpg');
-            background-size: cover;
-            background-position: center;
-            color: red;
-            overflow: hidden;
         }
-        .container {
-            margin: 20px;
+        h1 {
+            font-size: 2.5rem;
+            color: #ff4d4d;
+            margin-bottom: 20px;
         }
-        .photo {
-            width: 100%;
-            max-width: 500px;
-            border-radius: 20px;
-            margin: 10px auto;
-        }
-        .text {
-            font-size: 1.5rem;
-            margin: 20px;
-        }
-        .question {
-            font-size: 2rem;
-            margin: 20px;
-            font-weight: bold;
-        }
-        .buttons {
-            margin-top: 30px;
-        }
-        .button {
+        p {
             font-size: 1.2rem;
-            padding: 10px 20px;
-            margin: 10px;
-            color: #fff;
-            background-color: #d90052;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            color: #333;
         }
-        .button.no {
-            background-color: #333;
+        img, video {
+            max-width: 90%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .button-container {
+            margin: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        button {
+            font-size: 1rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .yes-btn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .yes-btn:hover {
+            background-color: #e63939;
+        }
+        .no-btn {
+            background-color: #f2f2f2;
+            color: #333;
             position: relative;
         }
-        .emojis {
-            font-size: 2rem;
-            position: fixed;
-            animation: float 3s infinite;
+        .no-btn:hover {
+            background-color: #ffcccc;
         }
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
+        .jump {
+            position: absolute;
+            animation: jump 0.3s ease;
+        }
+        @keyframes jump {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-50px); }
+            100% { transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="text">Hey Simran, How’s it going? I know I’m always late when it comes to things, but I have something important to ask.</div>
+    <!-- Page 1: Question Page -->
+    <div id="page-1">
+        <h1>Will You Be My Valentine? ❤️</h1>
 
-        <img src="photo1.jpg" alt="Simran" class="photo">
-        <img src="photo2.jpg" alt="Bouquet" class="photo">
-        <img src="photo3.jpg" alt="Romantic Moment" class="photo">
+        <video width="600" height="400" controls>
+            <source src="WhatsApp Video 2025-02-14 at 2.41.38 AM.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
 
-        <div class="question">Will you be my Valentine?</div>
-
-        <div class="buttons">
-            <button class="button yes" onclick="showEndMessage()">Yes</button>
-            <button class="button no" onclick="moveNoButton(this)">No</button>
+        <div class="button-container">
+            <button class="yes-btn" onclick="showPage2()">Yes</button>
+            <button class="no-btn" onclick="noAnswer(this)">No</button>
         </div>
-
-        <div id="emoji-container"></div>
     </div>
 
-    <audio id="background-music" loop>
-        <source src="you-belong-with-me-clip.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Page 2: Response Page -->
+    <div id="page-2" style="display: none;">
+        <video width="600" height="400" controls autoplay>
+            <source src="Copy of Simran birthday.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <h1>Thank you, Simran! 💖</h1>
+        <p>You mean the world to me, and I couldn’t imagine life without you.</p>
+
+        <audio controls autoplay>
+            <source src="Ed Sheeran - Perfect.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
 
     <script>
-        // Handles the "Yes" button
-        function showEndMessage() {
-            document.body.innerHTML = `
-                <div class='text'>Simran, you mean the world to me. I can't wait to celebrate Valentine's Day together!</div>
-                <audio autoplay loop>
-                    <source src="you-belong-with-me-clip.mp3" type="audio/mpeg">
-                </audio>
-            `;
+        function showPage2() {
+            document.getElementById('page-1').style.display = 'none';
+            document.getElementById('page-2').style.display = 'block';
         }
 
-        // Handles the "No" button jumping around
-        function moveNoButton(button) {
-            const x = Math.random() * window.innerWidth - button.offsetWidth;
-            const y = Math.random() * window.innerHeight - button.offsetHeight;
-            button.style.position = "absolute";
-            button.style.left = `${x}px`;
-            button.style.top = `${y}px`;
-            showEmoji();
+        function noAnswer(button) {
+            button.classList.add('jump');
+            setTimeout(() => {
+                button.classList.remove('jump');
+                button.style.left = Math.random() * 300 - 150 + 'px'; // Move randomly
+                button.style.top = Math.random() * 200 - 100 + 'px';
+            }, 300);
         }
-
-        // Show floating emojis
-        function showEmoji() {
-            const emojis = ["❤️", "💕", "💖", "💗", "💘"];
-            const emoji = document.createElement("div");
-            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            emoji.className = "emojis";
-            emoji.style.left = Math.random() * 100 + "vw";
-            emoji.style.animationDuration = Math.random() * 3 + 2 + "s";
-            document.body.appendChild(emoji);
-            setTimeout(() => emoji.remove(), 5000);
-        }
-
-        // Start playing music on page load
-        window.onload = function () {
-            const music = document.getElementById("background-music");
-            music.play();
-        };
     </script>
 </body>
 </html>
